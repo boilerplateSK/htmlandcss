@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS Skills Workout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .challenge-title {
+            color: #2d3748;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .emoji {
+            font-size: 1.8rem;
+        }
+
+        .challenge-description {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .code-area {
+            background: #1a202c;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: #2d3748;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .code-area::after {
+            content: '● ● ●';
+            position: absolute;
+            top: 8px;
+            left: 15px;
+            color: #ff5f56;
+            font-size: 12px;
+            letter-spacing: 3px;
+            z-index: 1;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            outline: none;
+            margin-top: 30px;
+            line-height: 1.4;
+        }
+
+        .preview-area {
+            background: #f7fafc;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .preview-area::before {
+            content: 'Preview';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #f7fafc;
+            padding: 0 10px;
+            color: #718096;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px 5px 0 0;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .hint {
+            background: #fef5e7;
+            border-left: 4px solid #f6ad55;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            color: #744210;
+        }
+
+        .success {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            color: #22543d;
+            display: none;
+        }
+
+        .task-list {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .task-list h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .task-list ol {
+            color: #4a5568;
+            padding-left: 20px;
+        }
+
+        .task-list li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            color: #4a5568;
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            40% { transform: translate(-50%, -50%) translateY(-20px); }
+            60% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 HTML & CSS Skills Workout</h1>
+            <p class="subtitle">Test your web development superpowers with these fun challenges!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="overallProgress"></div>
+            </div>
+        </header>
+
+        <div class="challenge-grid">
+            <!-- Challenge 1: HTML Structure -->
+            <div class="challenge-card">
+                <h3 class="challenge-title">
+                    <span class="emoji">🏗️</span>
+                    Challenge 1: Build the Foundation
+                </h3>
+                <p class="challenge-description">
+                    Create a proper HTML document structure with a header, main content area, and footer. Show off your semantic HTML skills!
+                </p>
+                
+                <div class="task-list">
+                    <h4>Your Mission:</h4>
+                    <ol>
+                        <li>Create a proper HTML5 document structure</li>
+                        <li>Add a header with your name as h1</li>
+                        <li>Create a main section with a paragraph about yourself</li>
+                        <li>Add a footer with copyright text</li>
+                    </ol>
+                </div>
+
+                <div class="code-area">
+                    <textarea id="challenge1-code" placeholder="Write your HTML here..."><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+</head>
+<body>
+    <!-- Add your header, main, and footer here -->
+    
+</body>
+</html></textarea>
+                </div>
+
+                <div class="preview-area" id="challenge1-preview"></div>
+
+                <button onclick="runCode('challenge1')">🎯 Test Your Code</button>
+                <button onclick="showHint('challenge1')">💡 Need a Hint?</button>
+
+                <div class="hint" id="challenge1-hint" style="display: none;">
+                    <strong>Hint:</strong> Use &lt;header&gt;, &lt;main&gt;, and &lt;footer&gt; tags for semantic structure. Don't forget to close your tags!
+                </div>
+
+                <div class="success" id="challenge1-success">
+                    🎉 Awesome! You've mastered HTML structure. Your foundation is rock solid!
+                </div>
+            </div>
+
+            <!-- Challenge 2: CSS Styling -->
+            <div class="challenge-card">
+                <h3 class="challenge-title">
+                    <span class="emoji">🎨</span>
+                    Challenge 2: Make it Beautiful
+                </h3>
+                <p class="challenge-description">
+                    Time to add some style! Use CSS to make your HTML look amazing with colors, fonts, and spacing.
+                </p>
+
+                <div class="task-list">
+                    <h4>Your Mission:</h4>
+                    <ol>
+                        <li>Style the body with a background color</li>
+                        <li>Center-align your header text</li>
+                        <li>Add padding to your main content</li>
+                        <li>Style your footer with a different background</li>
+                    </ol>
+                </div>
+
+                <div class="code-area">
+                    <textarea id="challenge2-code" placeholder="Write your CSS here..."><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Styled Page</title>
+    <style>
+        /* Add your CSS styles here */
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+    </header>
+    <main>
+        <p>This is my awesome website!</p>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+</body>
+</html></textarea>
+                </div>
+
+                <div class="preview-area" id="challenge2-preview"></div>
+
+                <button onclick="runCode('challenge2')">🎯 Test Your Code</button>
+                <button onclick="showHint('challenge2')">💡 Need a Hint?</button>
+
+                <div class="hint" id="challenge2-hint" style="display: none;">
+                    <strong>Hint:</strong> Try: body { background-color: lightblue; }, header { text-align: center; }, main { padding: 20px; }
+                </div>
+
+                <div class="success" id="challenge2-success">
+                    🌟 Beautiful! You're becoming a CSS artist. Those styles look fantastic!
+                </div>
+            </div>
+
+            <!-- Challenge 3: Flexbox Layout -->
+            <div class="challenge-card">
+                <h3 class="challenge-title">
+                    <span class="emoji">📐</span>
+                    Challenge 3: Flex Your Skills
+                </h3>
+                <p class="challenge-description">
+                    Create a navigation bar using Flexbox. Make those links line up horizontally like a pro!
+                </p>
+
+                <div class="task-list">
+                    <h4>Your Mission:</h4>
+                    <ol>
+                        <li>Create a nav element with 4 links</li>
+                        <li>Use flexbox to arrange links horizontally</li>
+                        <li>Add some spacing between the links</li>
+                        <li>Style the links to remove underlines</li>
+                    </ol>
+                </div>
+
+                <div class="code-area">
+                    <textarea id="challenge3-code" placeholder="Write your HTML and CSS here..."><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flex Navigation</title>
+    <style>
+        /* Create your flexbox navigation styles here */
+        
+    </style>
+</head>
+<body>
+    <!-- Create your navigation here -->
+    
+</body>
+</html></textarea>
+                </div>
+
+                <div class="preview-area" id="challenge3-preview"></div>
+
+                <button onclick="runCode('challenge3')">🎯 Test Your Code</button>
+                <button onclick="showHint('challenge3')">💡 Need a Hint?</button>
+
+                <div class="hint" id="challenge3-hint" style="display: none;">
+                    <strong>Hint:</strong> Use display: flex on the nav, and try justify-content: space-around. Don't forget text-decoration: none for links!
+                </div>
+
+                <div class="success" id="challenge3-success">
+                    🔥 Incredible! You've mastered flexbox. That navigation looks professional!
+                </div>
+            </div>
+
+            <!-- Challenge 4: Interactive Card -->
+            <div class="challenge-card">
+                <h3 class="challenge-title">
+                    <span class="emoji">🃏</span>
+                    Challenge 4: Create a Hover Card
+                </h3>
+                <p class="challenge-description">
+                    Build an interactive card that transforms when you hover over it. Time for some CSS magic!
+                </p>
+
+                <div class="task-list">
+                    <h4>Your Mission:</h4>
+                    <ol>
+                        <li>Create a card div with content inside</li>
+                        <li>Add a background color and border-radius</li>
+                        <li>Use :hover to change the card on mouse over</li>
+                        <li>Add a smooth transition effect</li>
+                    </ol>
+                </div>
+
+                <div class="code-area">
+                    <textarea id="challenge4-code" placeholder="Write your HTML and CSS here..."><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hover Card</title>
+    <style>
+        /* Create your magical hover card here */
+        
+    </style>
+</head>
+<body>
+    <!-- Create your hover card here -->
+    
+</body>
+</html></textarea>
+                </div>
+
+                <div class="preview-area" id="challenge4-preview"></div>
+
+                <button onclick="runCode('challenge4')">🎯 Test Your Code</button>
+                <button onclick="showHint('challenge4')">💡 Need a Hint?</button>
+
+                <div class="hint" id="challenge4-hint" style="display: none;">
+                    <strong>Hint:</strong> Try: .card:hover { transform: scale(1.1); background-color: newcolor; } and add transition: all 0.3s ease;
+                </div>
+
+                <div class="success" id="challenge4-success">
+                    ✨ Magical! Your hover effects are smooth and impressive. You're a CSS wizard!
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>🎓 Great job working through these challenges!</h3>
+            <p>Keep practicing and experimenting. Every expert was once a beginner!</p>
+            <p><strong>Remember:</strong> The best way to learn web development is by building things. Keep coding! 💻</p>
+        </div>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="celebration" id="celebration">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You've completed all challenges!</p>
+        <p>You're well on your way to becoming a web development master!</p>
+        <button onclick="closeCelebration()">Continue Learning! 🚀</button>
+    </div>
+
+    <script>
+        let completedChallenges = 0;
+        const totalChallenges = 4;
+
+        function runCode(challengeId) {
+            const code = document.getElementById(challengeId + '-code').value;
+            const preview = document.getElementById(challengeId + '-preview');
+            const success = document.getElementById(challengeId + '-success');
+            
+            // Create iframe for safe preview
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '200px';
+            iframe.style.border = '1px solid #e2e8f0';
+            iframe.style.borderRadius = '4px';
+            
+            preview.innerHTML = '';
+            preview.appendChild(iframe);
+            
+            // Write code to iframe
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(code);
+            iframeDoc.close();
+            
+            // Simple validation based on challenge
+            let isValid = false;
+            
+            switch(challengeId) {
+                case 'challenge1':
+                    isValid = code.includes('<header>') && code.includes('<main>') && code.includes('<footer>') && code.includes('<h1>');
+                    break;
+                case 'challenge2':
+                    isValid = code.includes('background-color') && code.includes('text-align') && code.includes('padding');
+                    break;
+                case 'challenge3':
+                    isValid = code.includes('display: flex') && code.includes('<nav>') && code.includes('<a ');
+                    break;
+                case 'challenge4':
+                    isValid = code.includes(':hover') && code.includes('transition') && (code.includes('transform') || code.includes('background-color'));
+                    break;
+            }
+            
+            if (isValid && success.style.display === 'none') {
+                success.style.display = 'block';
+                completedChallenges++;
+                updateProgress();
+                
+                if (completedChallenges === totalChallenges) {
+                    setTimeout(showCelebration, 1000);
+                }
+            }
+        }
+
+        function showHint(challengeId) {
+            const hint = document.getElementById(challengeId + '-hint');
+            hint.style.display = hint.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function updateProgress() {
+            const progressBar = document.getElementById('overallProgress');
+            const percentage = (completedChallenges / totalChallenges) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+
+        function showCelebration() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('celebration').style.display = 'block';
+        }
+
+        function closeCelebration() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('celebration').style.display = 'none';
+        }
+
+        // Auto-resize textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
+    </script>
+</body>
+</html>
